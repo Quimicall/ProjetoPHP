@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmtEstoque->execute();
 
         // Redireciona para a página de produtos
-        header("Location:index.php?pg=produtos");
+        header("Location: produtos.php");
         exit;
     } else {
         echo "Desculpe, houve um erro ao enviar seu arquivo.";

@@ -1,12 +1,15 @@
+<?php
+// Conexão com o banco de dados
+require_once "conexao2.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Vendas</title>
+    <title>Produtos</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos personalizados -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -24,21 +27,17 @@
         <h1 class="mt-5 mb-4">Produtos</h1>
         <div class="row">
             <?php
-            // Conexão com o banco de dados (assumindo que você já tenha um arquivo de conexão)
-            require_once "conexao.php";
-
-            // Consulta para obter os produtos
-            $query = "SELECT * FROM produtos";
+            $query = "SELECT idproduto, nome, preco, imagem FROM produtos";
             $result = $pdo->query($query);
 
-            // Exibição dos produtos
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='col-md-4'>";
                 echo "<div class='card produto-card'>";
+                echo "<img src='{$row['imagem']}' class='card-img-top produto-img' alt='Imagem do produto'>";
                 echo "<div class='card-body'>";
                 echo "<h5 class='card-title'>{$row['nome']}</h5>";
                 echo "<p class='card-text'>Preço: R$ {$row['preco']}</p>";
-                echo "<a href='comprar.php?id={$row['id_produto']}' class='btn btn-primary'>Comprar</a>";
+                echo "<a href='detalhes_produto.php?id={$row['idproduto']}' class='btn btn-primary'>Ver detalhes</a>";
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";
