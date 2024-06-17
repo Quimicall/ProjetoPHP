@@ -1,51 +1,46 @@
 <?php
-// editar_usuario.php
+require_once "conexao2.php"; // Inclui a conexão com o banco de dados
 
-include 'conexao2.php';
+// Verifica se o ID do usuário foi fornecido na URL
+if (isset($_GET['idusuario'])) {
+    $idusuario = intval($_GET['idusuario']);
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$nome = '';
-$email = '';
-$sit = '';
+    // Busca os dados do usuário no banco de dados
+    $query = "SELECT * FROM usuarios WHERE idusuario = :idusuario";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':idusuario', $idusuario, PDO::PARAM_INT);
+    $stmt->execute();
 
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Verifica se o usuário foi encontrado
+    if (!$usuario) {
+        echo "<script>alert('Usuário não encontrado.'); window.location.href = 'gerenciar_usuarios.php';</script>";
+        exit();
+    }
+} else {
+    echo "<script>alert('ID do usuário não fornecido.'); window.location.href = 'gerenciar_usuarios.php';</script>";
+    exit();
+}
+
+// Processa o formulário de edição
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $sit = $_POST['sit'];
 
-    try {
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email, sit = :sit WHERE idusuario = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':sit', $sit);
-        $stmt->execute();
+    // Atualiza os dados do usuário no banco de dados
+    $query = "UPDATE usuarios SET nome = :nome, email = :email, sit = :sit WHERE idusuario = :idusuario";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':sit', $sit, PDO::PARAM_INT);
+    $stmt->bindParam(':idusuario', $idusuario, PDO::PARAM_INT);
 
-        echo "<div class='alert alert-success' role='alert'>Usuário atualizado com sucesso!</div>";
-    } catch (PDOException $e) {
-        echo "<div class='alert alert-danger' role='alert'>Erro ao atualizar usuário: " . $e->getMessage() . "</div>";
-    }
-} else {
-    // Obter os dados do usuário para preencher o formulário
-    try {
-        $sql = "SELECT idusuario, nome, email, sit FROM usuarios WHERE idusuario = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user) {
-            $nome = $user['nome'];
-            $email = $user['email'];
-            $sit = $user['sit'];
-        } else {
-            echo "<div class='alert alert-warning' role='alert'>Usuário não encontrado</div>";
-            exit;
-        }
-    } catch (PDOException $e) {
-        echo "<div class='alert alert-danger' role='alert'>Erro ao obter dados do usuário: " . $e->getMessage() . "</div>";
+    if ($stmt->execute()) {
+        echo "<script>alert('Usuário atualizado com sucesso.'); window.location.href = 'index.php?pg=clientes';</script>";
+    } else {
+        echo "<script>alert('Erro ao atualizar usuário.'); window.location.href = 'index.php?pg=clientes.php';</script>";
     }
 }
 ?>
@@ -62,23 +57,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Editar Usuário</h1>
-        <form method="POST" action="">
-            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+        <form method="post">
             <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" required>
             </div>
             <div class="form-group">
                 <label for="sit">Situação</label>
-                <input type="text" class="form-control" id="sit" name="sit" value="<?php echo htmlspecialchars($sit); ?>" required>
+                <input type="number" class="form-control" id="sit" name="sit" value="<?php echo htmlspecialchars($usuario['sit']); ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
-        <a href="index.php?pg=clientes" class="btn btn-secondary mt-3">Voltar à Lista de Usuários</a>
     </div>
     <!-- Bootstrap JS e dependências -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

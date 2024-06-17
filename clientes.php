@@ -1,6 +1,5 @@
 <?php
-// lista_usuarios.php
-
+require_once "conexao2.php"; // Inclui a conexão com o banco de dados
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +43,8 @@
                             <td>" . htmlspecialchars($row["email"]) . "</td>
                             <td>" . htmlspecialchars($row["sit"]) . "</td>
                             <td>
-                                <a href='editar_usuario.php?id=" . htmlspecialchars($row["idusuario"]) . "' class='btn btn-warning btn-sm'>Editar</a>
-                                <a href='apagar_usuario.php?id=" . htmlspecialchars($row["idusuario"]) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Tem certeza que deseja apagar este usuário?\");'>Apagar</a>
+                                <a href='editar_usuario.php?idusuario=" . htmlspecialchars($row["idusuario"]) . "' class='btn btn-warning btn-sm'>Editar</a>
+                                <a href='apagar_usuario.php?idusuario=" . htmlspecialchars($row["idusuario"]) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Tem certeza que deseja apagar este usuário?\");'>Apagar</a>
                             </td>
                           </tr>";
                 }
