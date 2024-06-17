@@ -1,6 +1,9 @@
 <?php
 // lista_produtos.php
 
+// Incluir o arquivo de conexão com o banco de dados
+require_once "conexao2.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +22,7 @@
         <?php
         // Executar a consulta
         try {
+            // Consulta SQL para selecionar todos os produtos
             $stmt = $pdo->query("SELECT * FROM produtos");
             echo "<div class='container mt-5'>";
             echo "<h1>Lista de Produtos</h1>";
@@ -41,8 +45,6 @@
             echo "</div>";
         } catch (PDOException $e) {
             echo "Erro ao listar produtos: " . $e->getMessage();
-        } catch (PDOException $e) {
-            echo "<div class='alert alert-danger' role='alert'>Erro na consulta: " . $e->getMessage() . "</div>";
         }
         ?>
     </div>
