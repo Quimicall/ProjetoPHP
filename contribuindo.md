@@ -5,7 +5,7 @@ Agradecemos seu interesse em nossa documentação!
 
 [Maneira de contribuir](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
-[Contribuir usando o GitHub](## Contribuir usando o Git)
+[Contribuir usando o GitHub](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
 [Contribuir usando o Git](## Contribuir usando o Git)
 
