@@ -9,7 +9,7 @@ Agradecemos seu interesse em nossa documentação!
 
 [Contribuir usando o Git](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
-[Como usar o Markdown para formatar seu tópico](## Como usar o Markdown para formatar seu tópico)
+[Como usar o Markdown para formatar seu tópico](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
 [Perguntas frequentes](## Perguntas frequentes)
 
