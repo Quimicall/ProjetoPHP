@@ -13,7 +13,7 @@ Agradecemos seu interesse em nossa documentação!
 
 [Perguntas frequentes](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
-[Mais recursos](## Mais recursos)
+[Mais recursos](https://github.com/Quimicall/ProjetoPHP/blob/main/contribuindo.md#maneira-de-contribuir)
 
 
 ## Maneira de contribuir
